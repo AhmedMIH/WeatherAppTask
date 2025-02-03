@@ -1,4 +1,9 @@
 apply plugin: "com.android.application"
+project.ext.envConfigFiles = [
+        release: ".env",
+        dev: ".env",
+];
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
@@ -84,6 +89,19 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+      resValue "string", "build_config_package", "com.weatherapptask"
+
+    }
+     flavorDimensions 'env'
+    productFlavors {
+        development {
+            dimension 'env'
+            applicationIdSuffix ""
+        }
+        production {
+            dimension 'env'
+            applicationIdSuffix ""
+        }
     }
     signingConfigs {
         debug {
@@ -115,5 +133,8 @@ dependencies {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
+    }
+    implementation(project(":react-native-splash-screen")) {
+        exclude group: 'com.android.support', module: 'support-compat'
     }
 }
