@@ -1,6 +1,6 @@
 import apiClient from './client';
 
-export const getForecast = async (location, unit = 'c') => {
+export const getForecast = async location => {
   try {
     const response = await apiClient.get('forecast.json', {
       params: {
@@ -10,21 +10,19 @@ export const getForecast = async (location, unit = 'c') => {
         alerts: 'no',
       },
     });
-    return transformWeatherData(response.data, unit);
+    return transformWeatherData(response.data);
   } catch (error) {
     throw handleAPIError(error);
   }
 };
 
-const transformWeatherData = (data, unit) => ({
-  current: transformCurrentWeather(data.current, unit),
-  forecast: data.forecast.forecastday.map(day =>
-    transformForecastDay(day, unit),
-  ),
+const transformWeatherData = data => ({
+  current: transformCurrentWeather(data.current),
+  forecast: data.forecast.forecastday.map(day => transformForecastDay(day)),
   location: data.location,
 });
 
-const transformCurrentWeather = (current, unit) => ({
+const transformCurrentWeather = current => ({
   temp_c: current.temp_c,
   temp_f: current.temp_f,
   condition: current.condition,
@@ -35,7 +33,7 @@ const transformCurrentWeather = (current, unit) => ({
   feelsLike_f: current.feelslike_f,
 });
 
-const transformForecastDay = (day, unit) => ({
+const transformForecastDay = day => ({
   date: day.date,
   temp: {
     maxtemp_c: day.day.maxtemp_c,

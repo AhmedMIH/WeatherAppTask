@@ -13,13 +13,4 @@ const apiClient = axios.create( {
   
 } );
 
-apiClient.interceptors.request.use( config => {
-    console.log(config);
-    return config
-} );
-
-apiClient.interceptors.response.use( response => {
-    return response
-} );
-
 export default apiClient;
