@@ -5,10 +5,8 @@ import {useSelector} from 'react-redux';
 
 const CurrentWeather = ({current}) => {
   const unit = useSelector(state => state.weather.unit);
-
   return (
     <View style={styles.currentWeatherContainer}>
-      {/* Temperature with dynamic unit */}
       <Text style={styles.currentTemp}>
         {current?.[`temp_${unit}`]}°{unit.toUpperCase()}
       </Text>
@@ -22,7 +20,6 @@ const CurrentWeather = ({current}) => {
       </View>
 
       <View style={styles.statsContainer}>
-        {/* Wind speed with dynamic unit */}
         <View style={styles.statItem}>
           <Text style={styles.statValue}>
             {unit === 'c' ? current?.wind_kph : current?.wind_mph}
@@ -36,10 +33,9 @@ const CurrentWeather = ({current}) => {
           <Text style={styles.statLabel}>Humidity</Text>
         </View>
 
-        {/* Feels like with dynamic unit */}
         <View style={styles.statItem}>
           <Text style={styles.statValue}>
-            {current?.[`feelslike_${unit}`]}°{unit.toUpperCase()}
+            {current?.[`feelsLike_${unit}`]}°{unit.toUpperCase()}
           </Text>
           <Text style={styles.statLabel}>Feels Like</Text>
         </View>

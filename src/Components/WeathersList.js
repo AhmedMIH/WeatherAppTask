@@ -3,12 +3,15 @@ import React from 'react';
 import WeatherListItem from './WeatherListItem';
 import CurrentWeather from './CurrentWeather';
 
-const WeathersList = ({data, current}) => {
+const WeathersList = ({forecast, current}) => {
   return (
     <FlatList
-      ListHeaderComponent={<CurrentWeather current={current} />}
+      keyboardDismissMode="on-drag"
+      ListHeaderComponent={
+        forecast?.length > 0 && <CurrentWeather current={current} />
+      }
       showsVerticalScrollIndicator={false}
-      data={data}
+      data={forecast}
       style={{marginTop: 16}}
       contentContainerStyle={{gap: 16}}
       renderItem={({item}) => <WeatherListItem item={item} />}

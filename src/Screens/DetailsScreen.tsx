@@ -14,8 +14,8 @@ const DetailsScreen = ({route, navigation}) => {
   // Unit conversion helper
   const getWindSpeed = () => {
     return unit === 'c'
-      ? `${item.temp.avgvis} km/h`
-      : `${item.temp.avgvis} mph`;
+      ? `${item.temp.avgvis_km} km/h`
+      : `${item.temp.avgvis_miles} mph`;
   };
 
   return (
@@ -39,7 +39,7 @@ const DetailsScreen = ({route, navigation}) => {
       <View style={styles.detailsContainer}>
         <Text style={styles.date}>{item.date}</Text>
         <Text style={styles.temp}>
-          {item.temp.avgtemp}°{unit.toUpperCase()}
+          {item.temp[`avgtemp_${unit}`]}°{unit.toUpperCase()}
         </Text>
         <Text style={styles.desc}>{item.icon.text}</Text>
 
@@ -61,7 +61,9 @@ const DetailsScreen = ({route, navigation}) => {
 
         <DetailsItem
           title="Max/Min Temp"
-          value={`${item.temp.maxtemp}°/${item.temp.mintemp}°`}
+          value={`${item.temp[`maxtemp_${unit}`]}°/${
+            item.temp[`mintemp_${unit}`]
+          }°`}
           icon="thermometer"
         />
 

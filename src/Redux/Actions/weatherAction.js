@@ -1,30 +1,30 @@
-import apiClient from '../../Api/client';
+import {getForecast} from '../../Api/weatherAPI';
 import {
   GET_WEATHER_START,
   GET_WEATHER_SUCCESS,
   GET_WEATHER_FAILED,
+  TOGGLE_UNIT,
+  LOADER_START,
+  LOADER_STOP,
 } from '../Types';
 
 export function getWeather(location) {
   return async dispatch => {
+    dispatch({type: LOADER_START});
     dispatch({
       type: GET_WEATHER_START,
     });
-    console.log(location);
-    apiClient
-      .get(
-        `forecast.json?key=49987b5083ec41b098f173318250102&aqi=no&q=${location}&days=5&alerts=no`,
-      )
+    await getForecast(location)
       .then(response => {
-        if (response.status === 200) {
+        if (response?.current) {
           dispatch({
             type: GET_WEATHER_SUCCESS,
-            payload: response.data,
+            payload: response,
           });
         } else {
           dispatch({
             type: GET_WEATHER_FAILED,
-            payload: response.data,
+            payload: 'Location not found or failed to fetch weather data',
           });
         }
       })
@@ -33,12 +33,15 @@ export function getWeather(location) {
           type: GET_WEATHER_FAILED,
           payload: err,
         });
+      })
+      .finally(() => {
+        dispatch({type: LOADER_STOP});
       });
   };
 }
 
 export function toggleUnit() {
   return {
-    type: 'TOGGLE_UNIT',
+    type: TOGGLE_UNIT,
   };
 }

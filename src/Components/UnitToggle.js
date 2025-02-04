@@ -19,9 +19,9 @@ const UnitToggle = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8,
+    padding: 12,
     backgroundColor: 'rgba(255,255,255,0.2)',
-    borderRadius: 20,
+    borderRadius: 10,
   },
   text: {
     color: Colors.white,

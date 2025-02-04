@@ -1,0 +1,11 @@
+export const GET_WEATHER_START = 'GET_WEATHER_START';
+export const GET_WEATHER_SUCCESS = 'GET_WEATHER_SUCCESS';
+export const GET_WEATHER_FAILED = 'GET_WEATHER_FAILED';
+
+export const TOGGLE_UNIT = 'TOGGLE_UNIT';
+
+export const LOADER_START = 'LOADER_START';
+export const LOADER_STOP = 'LOADER_STOP';
+
+export const SHOW_TOAST = 'SHOW_TOAST';
+export const HIDE_TOAST = 'HIDE_TOAST';

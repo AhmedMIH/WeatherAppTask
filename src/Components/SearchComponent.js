@@ -1,12 +1,15 @@
 import {View, StyleSheet, Alert} from 'react-native';
-import React from 'react';
 import GetLocation from '../Utils/Location';
 import LocationButton from './LocationButton';
 import Searchbar from './Searchbar';
 import {debugLog, responsiveHeight} from '../Utils/Helper';
+import {useDispatch} from 'react-redux';
+import {loaderStart, loaderStop, showToast} from '../Redux/Actions';
 
 const SearchComponent = ({onChange}) => {
-  const getLocation = () =>
+  const dispatch = useDispatch();
+  const getLocation = () => {
+    dispatch(loaderStart());
     GetLocation.getCurrentPosition()
       .then(position => {
         let lat = parseFloat(position.latitude).toFixed(2);
@@ -14,13 +17,10 @@ const SearchComponent = ({onChange}) => {
         onChange(`${lat},${lon}`);
       })
       .catch(error => {
-        Alert.alert(
-          'Location Error',
-          error +
-            ' ,Please make sure you granted location permission form setting ',
-        );
-        debugLog('error', error);
-      });
+        dispatch(showToast(error.toString(), 'error'));
+      })
+      .finally(() => dispatch(loaderStop()));
+  };
 
   const onChangeSearchQuery = searchQuery => {
     searchQuery === undefined || searchQuery === ''

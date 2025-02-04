@@ -3,8 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import Colors from '../Utils/Colors';
 import {getFontSize, responsiveHeight, responsiveWidth} from '../Utils/Helper';
+import {useSelector} from 'react-redux';
 
 const WeatherListItem = ({item}) => {
+  const unit = useSelector(state => state.weather.unit);
   const navigation = useNavigation();
   const navigateToDetails = () => {
     navigation.navigate('Details', {item});
@@ -14,10 +16,10 @@ const WeatherListItem = ({item}) => {
       onPress={() => navigateToDetails()}
       style={styles.container}>
       <View style={{justifyContent: 'space-between'}}>
-        <Text style={styles.title}>{item.temp.avgtemp}°</Text>
+        <Text style={styles.title}>{item.temp[`avgtemp_${unit}`]}°</Text>
         <View>
           <Text style={styles.temp}>
-            H:{item.temp.maxtemp}° L:{item.temp.mintemp}°
+            H:{item.temp[`maxtemp_${unit}`]}° L:{item.temp[`mintemp_${unit}`]}°
           </Text>
           <Text style={styles.date}>{item.date}</Text>
         </View>
