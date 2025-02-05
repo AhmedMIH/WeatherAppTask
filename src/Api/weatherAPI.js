@@ -16,13 +16,13 @@ export const getForecast = async location => {
   }
 };
 
-const transformWeatherData = data => ({
+export const transformWeatherData = data => ({
   current: transformCurrentWeather(data.current),
   forecast: data.forecast.forecastday.map(day => transformForecastDay(day)),
   location: data.location,
 });
 
-const transformCurrentWeather = current => ({
+export const transformCurrentWeather = current => ({
   temp_c: current.temp_c,
   temp_f: current.temp_f,
   condition: current.condition,
@@ -33,7 +33,7 @@ const transformCurrentWeather = current => ({
   feelsLike_f: current.feelslike_f,
 });
 
-const transformForecastDay = day => ({
+export const transformForecastDay = day => ({
   date: day.date,
   temp: {
     maxtemp_c: day.day.maxtemp_c,
@@ -49,7 +49,7 @@ const transformForecastDay = day => ({
   icon: {text: day.day.condition.text, source: day.day.condition.icon},
   astro: day.astro,
 });
-const handleAPIError = error => {
+export const handleAPIError = error => {
   const status = error.response?.status;
   const message =
     status === 404 ? 'Location not found' : 'Failed to fetch weather data';
