@@ -24,7 +24,7 @@ The Weather App is a React Native application designed to provide users with up-
     ```
 2. Navigate to the project directory:
     ```sh
-    cd weather-app
+    cd WeatherAppTask
     ```
 3. Install the dependencies:
     ```sh
